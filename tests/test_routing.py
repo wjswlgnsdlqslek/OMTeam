@@ -4,8 +4,8 @@ from agent_system import route_to_agent, validate_user_request
 
 
 class TestRouting(unittest.TestCase):
-    def test_route_defaults_to_planner(self):
-        self.assertEqual(route_to_agent({"selected_agent": None}), "planner")
+    def test_route_defaults_to_analysis(self):
+        self.assertEqual(route_to_agent({"selected_agent": None}), "analysis")
 
     def test_route_planner(self):
         self.assertEqual(route_to_agent({"selected_agent": "planner"}), "planner")
