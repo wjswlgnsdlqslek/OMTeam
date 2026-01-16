@@ -2,21 +2,21 @@
 
 ## 실행 방법
 
-- 1. git clone
-- 2. uv init (uv 다운로드 필수 // https://devocean.sk.com/blog/techBoardDetail.do?ID=167420&boardType=techBlog 참고)
-- 3. uv venv .venv
-- 4. source .venv/bin/activate
-- 5. uv sync
-- 6. 터미널 'uv run uvicorn app.main:app --host 0.0.0.0 --port 8000'
+- 1. `git clone https://github.com/wjswlgnsdlqslek/OMTeam.git`
+- 2. `uv init` (uv 다운로드 필수 // https://devocean.sk.com/blog/techBoardDetail.do?ID=167420&boardType=techBlog 참고)
+- 3. `uv venv .venv`
+- 4. `source .venv/bin/activate`
+- 5. `uv sync`
+- 6. 터미널 '`uv run uvicorn app.main:app --host 0.0.0.0 --port 8000`'
 - 7. url '127.0.0.1:8000/redoc' -> 스웨거처럼 api 확인 가능
 
 ## 테스트 실행 방법
 
 (테스트는 제가 개발하면서 사용하는 거라서, 실행 시키고 요청 보내보시면 됩니다! env파일은 디스코드에 올려놓을게요!)
 
-- 1. 모든 테스트: python -m unittest discover tests
-- 2. 라우팅 테스트: python -m unittest tests.test_routing
-- 3. 엔드포인트 테스트: python -m unittest tests.test_api_endpoints
+- 1. 모든 테스트: `python -m unittest discover tests`
+- 2. 라우팅 테스트: `python -m unittest tests.test_routing`
+- 3. 엔드포인트 테스트: `python -m unittest tests.test_api_endpoints`
 
 ---
 
