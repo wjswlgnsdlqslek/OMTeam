@@ -4,7 +4,14 @@ from unittest.mock import patch, MagicMock
 from datetime import date, time, datetime
 import json
 
-from api_server import app, DailyMissionResponse, DailyMissionRequest, Mission, MissionType, Difficulty, WorkTimeType, LifestyleType, RecentMissionHistoryItem, MissionResult, OnboardingData, DailyFeedbackResponse, DailyFeedbackRequest, TodayMissionData, RecentSummaryData, Intent, EncouragementCandidate, WeeklyAnalysisResponse, WeeklyAnalysisRequest, WeekRangeData, WeeklyStatsData, FailureReasonRankedItem, ChatSessionResponse, ChatSessionRequest, InitialChatContext, BotMessage, BotMessageOption, ChatMessageResponse, ChatMessageRequest, ChatInputType, ChatInput, ChatState
+from app.main import app
+from app.api.schemas import (
+    DailyMissionResponse, DailyMissionRequest, Mission, MissionType, Difficulty, WorkTimeType, LifestyleType, RecentMissionHistoryItem, MissionResult, OnboardingData,
+    DailyFeedbackResponse, DailyFeedbackRequest, TodayMissionData, RecentSummaryData, Intent, EncouragementCandidate,
+    WeeklyAnalysisResponse, WeeklyAnalysisRequest, WeekRangeData, WeeklyStatsData, FailureReasonRankedItem,
+    ChatSessionResponse, ChatSessionRequest, InitialChatContext, BotMessage, BotMessageOption,
+    ChatMessageResponse, ChatMessageRequest, ChatInputType, ChatInput, ChatState
+)
 
 client = TestClient(app)
 
@@ -453,6 +460,7 @@ class TestChatMessageAPI(unittest.TestCase):
 
         request_payload = {
             "sessionId": 1,
+            "userId": 12345, # Added userId here
             "input": {
                 "type": "TEXT",
                 "text": "운동이 너무 힘들어요"
@@ -473,7 +481,7 @@ class TestChatMessageAPI(unittest.TestCase):
         args, kwargs = mock_run_agent_system.call_args
         self.assertIn("사용자 텍스트 입력: 운동이 너무 힘들어요", kwargs["user_request"])
         self.assertIn("event", kwargs["user_payload"])
-        # self.assertEqual(kwargs["user_id"], "12345") # user_id will be passed from the request, but not directly used in the prompt for chat messages
+        self.assertEqual(kwargs["user_id"], "12345")
 
 
     @patch('api_server.run_agent_system')
@@ -499,6 +507,7 @@ class TestChatMessageAPI(unittest.TestCase):
 
         request_payload = {
             "sessionId": 1,
+            "userId": 12345, # Added userId here
             "input": {
                 "type": "OPTION",
                 "value": "TIME_SHORTAGE"
@@ -518,6 +527,8 @@ class TestChatMessageAPI(unittest.TestCase):
         mock_run_agent_system.assert_called_once()
         args, kwargs = mock_run_agent_system.call_args
         self.assertIn("사용자 선택지 입력: TIME_SHORTAGE", kwargs["user_request"])
+        self.assertEqual(kwargs["user_id"], "12345") # user_id will be passed from the request
+
 
     @patch('api_server.run_agent_system')
     def test_handle_chat_message_ai_response_parse_error(self, mock_run_agent_system):
@@ -525,6 +536,7 @@ class TestChatMessageAPI(unittest.TestCase):
 
         request_payload = {
             "sessionId": 1,
+            "userId": 12345, # Added userId here
             "input": {
                 "type": "TEXT",
                 "text": "운동이 너무 힘들어요"
@@ -556,6 +568,7 @@ class TestChatMessageAPI(unittest.TestCase):
 
         request_payload = {
             "sessionId": 1,
+            "userId": 12345, # Added userId here
             "input": {
                 "type": "TEXT",
                 "text": "운동이 너무 힘들어요"
